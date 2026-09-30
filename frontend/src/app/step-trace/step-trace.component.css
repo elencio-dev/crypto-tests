@@ -1,0 +1,267 @@
+:host {
+  display: block;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  color: #1a1a2e;
+}
+
+.lab {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 24px 16px 64px;
+}
+
+.toolbar {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  flex-wrap: wrap;
+  border-bottom: 1px solid #e2e4ea;
+  padding-bottom: 20px;
+  margin-bottom: 20px;
+}
+
+.algo-info {
+  flex: 1;
+  min-width: 240px;
+}
+
+.algo-info h2 {
+  margin: 0 0 6px;
+  font-size: 1.3rem;
+}
+
+.algo-info p {
+  margin: 0;
+  color: #565a6e;
+  font-size: 0.92rem;
+  line-height: 1.4;
+}
+
+.run-btn {
+  background: #4338ca;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 20px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.run-btn:disabled {
+  background: #a5a6c9;
+  cursor: default;
+}
+
+.error {
+  color: #b91c1c;
+  background: #fee2e2;
+  border-radius: 8px;
+  padding: 10px 14px;
+  font-size: 0.9rem;
+}
+
+.empty {
+  color: #6b7280;
+  text-align: center;
+  padding: 40px 0;
+}
+
+.workspace {
+  display: grid;
+  grid-template-columns: 320px 1fr;
+  gap: 20px;
+  align-items: start;
+}
+
+.steps {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  border-right: 1px solid #e2e4ea;
+  padding-right: 16px;
+}
+
+.step-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: #f7f7fb;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  padding: 8px 10px;
+  cursor: pointer;
+  text-align: left;
+  font: inherit;
+}
+
+.step-item.selected {
+  background: #eef0ff;
+  border-color: #4338ca;
+}
+
+.step-index {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: #e2e4ea;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.75rem;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+.step-item-body {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-width: 0;
+}
+
+.step-item-title {
+  font-size: 0.85rem;
+  font-weight: 600;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.step-item-actor {
+  font-size: 0.7rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+.step-item-actor[data-actor='alice'] { color: #7c3aed; }
+.step-item-actor[data-actor='bob'] { color: #0f766e; }
+.step-item-actor[data-actor='shared'] { color: #6b7280; }
+
+.step-item-duration {
+  font-size: 0.7rem;
+  color: #9ca3af;
+  flex-shrink: 0;
+}
+
+.total {
+  margin-top: 8px;
+  font-size: 0.8rem;
+  color: #6b7280;
+  text-align: right;
+}
+
+.detail {
+  min-width: 0;
+}
+
+.detail-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 16px;
+}
+
+.detail-header h3 {
+  margin: 0;
+  font-size: 1.15rem;
+}
+
+.badge {
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  padding: 3px 9px;
+  border-radius: 999px;
+  background: #e2e4ea;
+  color: #4b5563;
+}
+
+.detail-header[data-actor='alice'] .badge { background: #f3e8ff; color: #7c3aed; }
+.detail-header[data-actor='bob'] .badge { background: #ccfbf1; color: #0f766e; }
+
+.field {
+  margin-bottom: 18px;
+}
+
+.field h4 {
+  margin: 0 0 4px;
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: #6b7280;
+}
+
+.field p {
+  margin: 0;
+  line-height: 1.5;
+  font-size: 0.95rem;
+}
+
+.field p.math {
+  font-family: 'SF Mono', Consolas, Menlo, monospace;
+  background: #f7f7fb;
+  padding: 8px 12px;
+  border-radius: 6px;
+  font-size: 0.9rem;
+}
+
+.values {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.values li {
+  background: #f7f7fb;
+  border-radius: 6px;
+  padding: 8px 12px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 8px;
+}
+
+.value-label {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #374151;
+  flex-shrink: 0;
+}
+
+.value-data {
+  font-family: 'SF Mono', Consolas, Menlo, monospace;
+  font-size: 0.82rem;
+  color: #1f2937;
+  word-break: break-all;
+}
+
+.value-note {
+  font-size: 0.75rem;
+  color: #b45309;
+  font-style: italic;
+  flex-basis: 100%;
+}
+
+.timing p {
+  color: #6b7280;
+  font-size: 0.85rem;
+}
+
+@media (max-width: 720px) {
+  .workspace {
+    grid-template-columns: 1fr;
+  }
+  .steps {
+    border-right: none;
+    border-bottom: 1px solid #e2e4ea;
+    padding-right: 0;
+    padding-bottom: 16px;
+  }
+}

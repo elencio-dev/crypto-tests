@@ -1,0 +1,107 @@
+<div class="lab">
+  <header class="toolbar">
+    <div class="algo-picker" *ngIf="algorithms().length > 1">
+      <select
+        [ngModel]="selectedAlgorithmId()"
+        (ngModelChange)="selectAlgorithm($event)"
+      >
+        <option *ngFor="let a of algorithms()" [value]="a.id">{{ a.title }}</option>
+      </select>
+    </div>
+    <div class="algo-info" *ngIf="selectedAlgorithm() as algo">
+      <h2>{{ algo.title }}</h2>
+      <p>{{ algo.description }}</p>
+    </div>
+    <button class="run-btn" (click)="run()" [disabled]="loading() || !selectedAlgorithmId()">
+      {{ loading() ? 'Running…' : (trace() ? 'Run again' : 'Run') }}
+    </button>
+  </header>
+
+  <p class="error" *ngIf="error()">{{ error() }}</p>
+
+  <div class="workspace" *ngIf="trace() as t">
+    <aside class="steps">
+      <button
+        *ngFor="let step of t.steps; let i = index"
+        class="step-item"
+        [class.selected]="step.id === selectedStepId()"
+        [attr.data-actor]="step.actor || 'shared'"
+        (click)="selectStep(step.id)"
+      >
+        <span class="step-index">{{ i + 1 }}</span>
+        <span class="step-item-body">
+          <span class="step-item-title">{{ step.title }}</span>
+          <span class="step-item-actor" [attr.data-actor]="step.actor || 'shared'">
+            {{ actorLabel(step.actor) }}
+          </span>
+        </span>
+        <span class="step-item-duration">{{ formatDuration(step.durationUs) }}</span>
+      </button>
+      <div class="total">Total: {{ formatDuration(t.totalDurationUs) }}</div>
+    </aside>
+
+    <section class="detail" *ngIf="selectedStep() as step">
+      <div class="detail-header" [attr.data-actor]="step.actor || 'shared'">
+        <h3>{{ step.title }}</h3>
+        <span class="badge">{{ actorLabel(step.actor) }}</span>
+      </div>
+
+      <div class="field">
+        <h4>What</h4>
+        <p>{{ step.what }}</p>
+      </div>
+
+      <div class="field">
+        <h4>Why</h4>
+        <p>{{ step.why }}</p>
+      </div>
+
+      <div class="field" *ngIf="step.math">
+        <h4>Math</h4>
+        <p class="math">{{ step.math }}</p>
+      </div>
+
+      <div class="field" *ngIf="step.params?.length">
+        <h4>Parameters</h4>
+        <ul class="values">
+          <li *ngFor="let v of step.params">
+            <span class="value-label">{{ v.label }}</span>
+            <span class="value-data">{{ v.hex ?? v.text }}</span>
+            <span class="value-note" *ngIf="v.note">{{ v.note }}</span>
+          </li>
+        </ul>
+      </div>
+
+      <div class="field" *ngIf="step.inputs?.length">
+        <h4>Inputs</h4>
+        <ul class="values">
+          <li *ngFor="let v of step.inputs">
+            <span class="value-label">{{ v.label }}</span>
+            <span class="value-data">{{ v.hex ?? v.text }}</span>
+            <span class="value-note" *ngIf="v.note">{{ v.note }}</span>
+          </li>
+        </ul>
+      </div>
+
+      <div class="field" *ngIf="step.outputs?.length">
+        <h4>Outputs</h4>
+        <ul class="values">
+          <li *ngFor="let v of step.outputs">
+            <span class="value-label">{{ v.label }}</span>
+            <span class="value-data">{{ v.hex ?? v.text }}</span>
+            <span class="value-note" *ngIf="v.note">{{ v.note }}</span>
+          </li>
+        </ul>
+      </div>
+
+      <div class="field timing">
+        <h4>Execution time</h4>
+        <p>{{ formatDuration(step.durationUs) }}</p>
+      </div>
+    </section>
+  </div>
+
+  <p class="empty" *ngIf="!trace() && !loading() && !error()">
+    Click <strong>Run</strong> to watch the algorithm execute step by step.
+  </p>
+</div>
