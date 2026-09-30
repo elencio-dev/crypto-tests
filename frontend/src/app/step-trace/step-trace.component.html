@@ -19,25 +19,44 @@
 
   <p class="error" *ngIf="error()">{{ error() }}</p>
 
+  <div class="playback" *ngIf="trace() as pt">
+    <button (click)="stepBack()" [disabled]="!canStepBack()">‹ Prev</button>
+    <button class="play-pause" (click)="playing() ? pause() : play()" [disabled]="isComplete() && !playing()">
+      {{ playing() ? '❚❚ Pause' : (isComplete() ? 'Done' : '▶ Play') }}
+    </button>
+    <button (click)="stepForward()" [disabled]="isComplete()">Next ›</button>
+    <button class="show-all" (click)="showAll()" *ngIf="!isComplete()">Show all</button>
+    <span class="progress">Step {{ selectedIndex() }} of {{ totalSteps() }}</span>
+  </div>
+
   <div class="workspace" *ngIf="trace() as t">
     <aside class="steps">
       <button
         *ngFor="let step of t.steps; let i = index"
         class="step-item"
         [class.selected]="step.id === selectedStepId()"
+        [class.pending]="i >= revealedCount()"
+        [disabled]="i >= revealedCount()"
         [attr.data-actor]="step.actor || 'shared'"
         (click)="selectStep(step.id)"
       >
         <span class="step-index">{{ i + 1 }}</span>
-        <span class="step-item-body">
-          <span class="step-item-title">{{ step.title }}</span>
-          <span class="step-item-actor" [attr.data-actor]="step.actor || 'shared'">
-            {{ actorLabel(step.actor) }}
+        <ng-container *ngIf="i < revealedCount(); else pendingTpl">
+          <span class="step-item-body">
+            <span class="step-item-title">{{ step.title }}</span>
+            <span class="step-item-actor" [attr.data-actor]="step.actor || 'shared'">
+              {{ actorLabel(step.actor) }}
+            </span>
           </span>
-        </span>
-        <span class="step-item-duration">{{ formatDuration(step.durationUs) }}</span>
+          <span class="step-item-duration">{{ formatDuration(step.durationUs) }}</span>
+        </ng-container>
+        <ng-template #pendingTpl>
+          <span class="step-item-body">
+            <span class="step-item-title pending-title">Waiting…</span>
+          </span>
+        </ng-template>
       </button>
-      <div class="total">Total: {{ formatDuration(t.totalDurationUs) }}</div>
+      <div class="total" *ngIf="isComplete()">Total: {{ formatDuration(t.totalDurationUs) }}</div>
     </aside>
 
     <section class="detail" *ngIf="selectedStep() as step">

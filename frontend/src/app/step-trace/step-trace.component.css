@@ -62,6 +62,46 @@
   font-size: 0.9rem;
 }
 
+.playback {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.playback button {
+  background: #f7f7fb;
+  border: 1px solid #e2e4ea;
+  border-radius: 6px;
+  padding: 6px 12px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #374151;
+  cursor: pointer;
+}
+
+.playback button:disabled {
+  opacity: 0.4;
+  cursor: default;
+}
+
+.playback button.play-pause {
+  background: #eef0ff;
+  border-color: #4338ca;
+  color: #4338ca;
+}
+
+.playback .show-all {
+  color: #6b7280;
+  font-weight: 500;
+}
+
+.playback .progress {
+  margin-left: auto;
+  font-size: 0.82rem;
+  color: #6b7280;
+}
+
 .empty {
   color: #6b7280;
   text-align: center;
@@ -99,6 +139,17 @@
 .step-item.selected {
   background: #eef0ff;
   border-color: #4338ca;
+}
+
+.step-item.pending {
+  opacity: 0.45;
+  cursor: default;
+}
+
+.pending-title {
+  font-style: italic;
+  color: #9ca3af;
+  font-weight: 500;
 }
 
 .step-index {
