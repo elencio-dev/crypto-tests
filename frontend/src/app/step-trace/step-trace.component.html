@@ -78,6 +78,12 @@
       <div class="field" *ngIf="step.math">
         <h4>Math</h4>
         <p class="math">{{ step.math }}</p>
+        <ul class="legend" *ngIf="step.mathLegend?.length">
+          <li *ngFor="let term of step.mathLegend">
+            <code class="legend-symbol">{{ term.symbol }}</code>
+            <span class="legend-meaning">{{ term.meaning }}</span>
+          </li>
+        </ul>
       </div>
 
       <div class="field" *ngIf="step.params?.length">

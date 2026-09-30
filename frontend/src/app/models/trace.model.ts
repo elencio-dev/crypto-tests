@@ -8,6 +8,11 @@ export interface CryptoValue {
   note?: string;
 }
 
+export interface MathTerm {
+  symbol: string;
+  meaning: string;
+}
+
 export interface Step {
   id: string;
   title: string;
@@ -15,6 +20,7 @@ export interface Step {
   what: string;
   why: string;
   math?: string;
+  mathLegend?: MathTerm[];
   params?: CryptoValue[];
   inputs?: CryptoValue[];
   outputs?: CryptoValue[];

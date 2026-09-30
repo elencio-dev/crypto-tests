@@ -79,7 +79,8 @@ export class StepTraceComponent {
       next: (trace) => {
         this.trace.set(trace);
         this.loading.set(false);
-        this.playing.set(true);
+        // Reveal just the first step and wait for the user to step through
+        // the rest with Next (or Play, for hands-off auto-advance).
         this.revealNext();
       },
       error: () => {

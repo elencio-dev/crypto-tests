@@ -22,19 +22,27 @@ type Value struct {
 	Note  string    `json:"note,omitempty"`
 }
 
+// MathTerm names one symbol used in a step's Math expression and explains
+// what it stands for, so the formula reads as more than a string of glyphs.
+type MathTerm struct {
+	Symbol  string `json:"symbol"`
+	Meaning string `json:"meaning"`
+}
+
 // Step is one inspectable stage of an algorithm's execution: what happened,
 // why, the values that flowed through it, and how long it took.
 type Step struct {
-	ID         string  `json:"id"`
-	Title      string  `json:"title"`
-	Actor      string  `json:"actor,omitempty"` // "alice", "bob", or "" for a shared/system step
-	What       string  `json:"what"`
-	Why        string  `json:"why"`
-	Math       string  `json:"math,omitempty"`
-	Params     []Value `json:"params,omitempty"`
-	Inputs     []Value `json:"inputs,omitempty"`
-	Outputs    []Value `json:"outputs,omitempty"`
-	DurationUs int64   `json:"durationUs"`
+	ID         string     `json:"id"`
+	Title      string     `json:"title"`
+	Actor      string     `json:"actor,omitempty"` // "alice", "bob", or "" for a shared/system step
+	What       string     `json:"what"`
+	Why        string     `json:"why"`
+	Math       string     `json:"math,omitempty"`
+	MathLegend []MathTerm `json:"mathLegend,omitempty"`
+	Params     []Value    `json:"params,omitempty"`
+	Inputs     []Value    `json:"inputs,omitempty"`
+	Outputs    []Value    `json:"outputs,omitempty"`
+	DurationUs int64      `json:"durationUs"`
 }
 
 // Trace is the complete step-by-step record produced by running one algorithm.
