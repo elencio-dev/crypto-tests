@@ -38,4 +38,5 @@ export interface AlgorithmSummary {
   id: string;
   title: string;
   description: string;
+  background: string;
 }

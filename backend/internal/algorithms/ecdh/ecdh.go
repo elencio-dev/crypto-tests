@@ -24,6 +24,10 @@ func (a *Algorithm) Description() string {
 	return "Alice and Bob each generate an elliptic-curve key pair, exchange public keys over an open channel, and independently derive the same shared secret without ever transmitting it."
 }
 
+func (a *Algorithm) Background() string {
+	return "ECDH adapts the original 1976 Diffie–Hellman key exchange — the first public-key protocol ever published — to elliptic curve groups, as proposed independently by Neal Koblitz and Victor Miller in 1985. The underlying idea is identical either way: combine a secret scalar with a public generator so two parties can agree on a secret that an eavesdropper, seeing only the public values, cannot feasibly reconstruct. Moving to elliptic curves matters in practice because the elliptic-curve discrete-log problem is much harder per bit than its finite-field counterpart: a 256-bit EC key gives roughly the security of a 3072-bit classic Diffie–Hellman key. That's why ECDH (usually on curves like P-256 or Curve25519) replaced plain DH as the default key exchange in TLS 1.3, SSH, Signal, and most modern protocols."
+}
+
 func hexVal(label string, b []byte, note string) engine.Value {
 	return engine.Value{Label: label, Kind: engine.KindHex, Hex: hex.EncodeToString(b), Note: note}
 }

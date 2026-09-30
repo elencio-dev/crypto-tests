@@ -37,6 +37,22 @@
   line-height: 1.4;
 }
 
+.algo-info p.background {
+  margin-top: 8px;
+  font-size: 0.85rem;
+  color: #6b7280;
+}
+
+.background-label {
+  display: block;
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: #9ca3af;
+  margin-bottom: 2px;
+}
+
 .run-btn {
   background: #4338ca;
   color: white;
@@ -106,6 +122,98 @@
   color: #6b7280;
   text-align: center;
   padding: 40px 0;
+}
+
+.diagram-wrap {
+  margin-bottom: 20px;
+  background: #fafafd;
+  border: 1px solid #e2e4ea;
+  border-radius: 12px;
+  padding: 8px;
+}
+
+.diagram {
+  width: 100%;
+  max-width: 640px;
+  height: auto;
+  display: block;
+  margin: 0 auto;
+}
+
+.diagram .col-label {
+  font-size: 13px;
+  font-weight: 700;
+  fill: #374151;
+}
+
+.diagram .link {
+  stroke: #d1d5db;
+  stroke-width: 1.5;
+}
+
+.diagram .arrowhead {
+  fill: #d1d5db;
+}
+
+.diagram .node rect {
+  fill: #f7f7fb;
+  stroke: #e2e4ea;
+  stroke-width: 1.5;
+  transition: fill 0.2s ease, stroke 0.2s ease;
+}
+
+.diagram .node text {
+  font-size: 12px;
+  font-weight: 600;
+  fill: #374151;
+  text-anchor: middle;
+  transition: fill 0.2s ease;
+}
+
+.diagram .node text.sub {
+  font-size: 10px;
+  font-weight: 500;
+  font-family: 'SF Mono', Consolas, Menlo, monospace;
+  fill: #6b7280;
+}
+
+.diagram .node[data-state='pending'] {
+  cursor: default;
+}
+
+.diagram .node[data-state='pending'] rect {
+  fill: #f3f4f6;
+  stroke: #ececf1;
+}
+
+.diagram .node[data-state='pending'] text {
+  fill: #c1c4cc;
+}
+
+.diagram .node[data-state='revealed'] {
+  cursor: pointer;
+}
+
+.diagram .node[data-state='revealed'] rect {
+  fill: #eef0ff;
+  stroke: #c7cbfa;
+}
+
+.diagram .node[data-state='active'] {
+  cursor: pointer;
+}
+
+.diagram .node[data-state='active'] rect {
+  fill: #4338ca;
+  stroke: #4338ca;
+}
+
+.diagram .node[data-state='active'] text {
+  fill: #ffffff;
+}
+
+.diagram .node[data-state='active'] text.sub {
+  fill: #d9d9ff;
 }
 
 .workspace {
@@ -348,6 +456,14 @@
 .timing p {
   color: #6b7280;
   font-size: 0.85rem;
+}
+
+.timing p.timing-note {
+  margin-top: 8px;
+  color: #9ca3af;
+  font-size: 0.78rem;
+  line-height: 1.5;
+  font-style: italic;
 }
 
 @media (max-width: 720px) {

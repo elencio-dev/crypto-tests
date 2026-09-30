@@ -6,6 +6,32 @@ import { AlgorithmSummary, Trace } from '../models/trace.model';
 
 const STEP_DELAY_MS = 900;
 
+/**
+ * The fixed set of boxes in the ECDH flow diagram. Diagram layout is
+ * algorithm-specific (a ChaCha20 diagram will look nothing like this one),
+ * so this mapping only applies while the ECDH trace is loaded.
+ */
+export type EcdhNode =
+  | 'alice-priv'
+  | 'bob-priv'
+  | 'alice-pub'
+  | 'bob-pub'
+  | 'exchange'
+  | 'alice-shared'
+  | 'bob-shared'
+  | 'shared-secret';
+
+const ECDH_NODE_TO_STEP: Record<EcdhNode, string> = {
+  'alice-priv': 'alice-keygen',
+  'bob-priv': 'bob-keygen',
+  'alice-pub': 'alice-pubkey',
+  'bob-pub': 'bob-pubkey',
+  exchange: 'exchange',
+  'alice-shared': 'alice-shared',
+  'bob-shared': 'bob-shared',
+  'shared-secret': 'verify',
+};
+
 @Component({
   selector: 'app-step-trace',
   standalone: true,
@@ -48,6 +74,8 @@ export class StepTraceComponent {
   readonly selectedAlgorithm = computed(() =>
     this.algorithms().find((a) => a.id === this.selectedAlgorithmId()) ?? null,
   );
+
+  readonly showEcdhDiagram = computed(() => this.trace()?.algorithmId === 'ecdh');
 
   constructor(destroyRef: DestroyRef) {
     this.api.listAlgorithms().subscribe({
@@ -166,6 +194,19 @@ export class StepTraceComponent {
       clearTimeout(this.timer);
       this.timer = null;
     }
+  }
+
+  nodeState(node: EcdhNode): 'pending' | 'revealed' | 'active' {
+    const t = this.trace();
+    if (!t) return 'pending';
+    const stepId = ECDH_NODE_TO_STEP[node];
+    const idx = t.steps.findIndex((s) => s.id === stepId);
+    if (idx === -1 || idx >= this.revealedCount()) return 'pending';
+    return this.selectedStepId() === stepId ? 'active' : 'revealed';
+  }
+
+  selectNode(node: EcdhNode): void {
+    this.selectStep(ECDH_NODE_TO_STEP[node]);
   }
 
   actorLabel(actor: string | undefined): string {

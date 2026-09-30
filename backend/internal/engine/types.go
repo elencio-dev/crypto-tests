@@ -58,5 +58,9 @@ type Algorithm interface {
 	ID() string
 	Title() string
 	Description() string
+	// Background gives the historical/mathematical context a newcomer needs
+	// before the step trace makes sense: where the algorithm came from and
+	// why it's used today.
+	Background() string
 	Run() (Trace, error)
 }

@@ -25,6 +25,7 @@ type Summary struct {
 	ID          string `json:"id"`
 	Title       string `json:"title"`
 	Description string `json:"description"`
+	Background  string `json:"background"`
 }
 
 // List returns every registered algorithm's summary, sorted by ID for a
@@ -32,7 +33,7 @@ type Summary struct {
 func (r *Registry) List() []Summary {
 	out := make([]Summary, 0, len(r.algorithms))
 	for _, a := range r.algorithms {
-		out = append(out, Summary{ID: a.ID(), Title: a.Title(), Description: a.Description()})
+		out = append(out, Summary{ID: a.ID(), Title: a.Title(), Description: a.Description(), Background: a.Background()})
 	}
 	sort.Slice(out, func(i, j int) bool { return out[i].ID < out[j].ID })
 	return out
