@@ -128,7 +128,26 @@ algorithms' traces into one Alice → Bob workflow, e.g.:
 [ ML-DSA ] ───────────────────────────────► [ Verify ]
 ```
 
-Next natural additions: HKDF and ChaCha20-Poly1305 (to prove the algorithm
-registry generalizes beyond key exchange), then a post-quantum entry
-(ML-KEM), then a "workflow" concept that composes multiple algorithms'
-traces into one end-to-end run.
+That needs more algorithms in the registry first. Candidates, grouped the
+way cryptography is usually taught (each category exercises the engine
+contract differently, which is useful — a hash function has no `actor`
+split at all, for instance):
+
+- **Symmetric key** — AES, DES: single shared key, same operation
+  encrypts and decrypts.
+- **Asymmetric key** — RSA (keygen → encrypt → decrypt maps almost
+  directly onto a step trace), ECDSA (signing, as opposed to ECDH's key
+  agreement).
+- **Hash functions** — SHA-256, MD5: no key, one-way, fixed-length
+  digest from arbitrary-length input. A structurally different `Step`
+  shape than ECDH/RSA, good for proving the contract generalizes.
+- **Post-quantum** — ML-KEM (key encapsulation), ML-DSA (signatures) —
+  needed for the hybrid pipeline above.
+- **Classical ciphers** — Caesar, Vigenère, Atbash, ROT13, Rail Fence:
+  low-effort to implement, good for teaching substitution vs.
+  transposition before diving into modern algorithms.
+
+Immediate next step, regardless of which of the above comes first: a
+"workflow" concept that composes multiple algorithms' traces into one
+end-to-end run, since every category above eventually feeds into the
+hybrid pipeline.
