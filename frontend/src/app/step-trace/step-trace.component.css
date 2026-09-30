@@ -124,6 +124,29 @@
   padding: 40px 0;
 }
 
+.view-toggle {
+  display: flex;
+  gap: 6px;
+  margin-bottom: 12px;
+}
+
+.view-toggle button {
+  background: #f7f7fb;
+  border: 1px solid #e2e4ea;
+  border-radius: 6px;
+  padding: 6px 14px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #6b7280;
+  cursor: pointer;
+}
+
+.view-toggle button.active {
+  background: #eef0ff;
+  border-color: #4338ca;
+  color: #4338ca;
+}
+
 .diagram-wrap {
   margin-bottom: 20px;
   background: #fafafd;

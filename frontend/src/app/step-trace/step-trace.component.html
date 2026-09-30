@@ -33,7 +33,12 @@
     <span class="progress">Step {{ selectedIndex() }} of {{ totalSteps() }}</span>
   </div>
 
-  <div class="diagram-wrap" *ngIf="trace() && showEcdhDiagram()">
+  <div class="view-toggle" *ngIf="trace() && showEcdhDiagram()">
+    <button [class.active]="viewMode() === 'diagram'" (click)="viewMode.set('diagram')">◈ Diagram</button>
+    <button [class.active]="viewMode() === 'steps'" (click)="viewMode.set('steps')">☰ Step-by-step</button>
+  </div>
+
+  <div class="diagram-wrap" *ngIf="trace() && effectiveView() === 'diagram'">
     <svg viewBox="0 0 640 390" class="diagram" role="img" aria-label="Diagram of the ECDH exchange between Alice and Bob">
       <defs>
         <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
@@ -99,7 +104,8 @@
     </svg>
   </div>
 
-  <div class="workspace" *ngIf="trace() as t">
+  <ng-container *ngIf="trace() as t">
+  <div class="workspace" *ngIf="effectiveView() === 'steps'">
     <aside class="steps">
       <button
         *ngFor="let step of t.steps; let i = index"
@@ -201,6 +207,7 @@
       </div>
     </section>
   </div>
+  </ng-container>
 
   <p class="empty" *ngIf="!trace() && !loading() && !error()">
     Click <strong>Run</strong> to watch the algorithm execute step by step.

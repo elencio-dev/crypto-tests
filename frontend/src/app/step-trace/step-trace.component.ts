@@ -77,6 +77,10 @@ export class StepTraceComponent {
 
   readonly showEcdhDiagram = computed(() => this.trace()?.algorithmId === 'ecdh');
 
+  /** Which of the two views the user picked; falls back to 'steps' for algorithms with no diagram. */
+  readonly viewMode = signal<'diagram' | 'steps'>('diagram');
+  readonly effectiveView = computed(() => (this.showEcdhDiagram() ? this.viewMode() : 'steps'));
+
   constructor(destroyRef: DestroyRef) {
     this.api.listAlgorithms().subscribe({
       next: (list) => {
